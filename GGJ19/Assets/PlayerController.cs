@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Vector2 mouseSensitivity = new Vector2(1, 1);
 
-    [SerializeField]
-    private float cameraY = 1.8f;
 
     [SerializeField]
     private Vector2 cameraXMinMax = new Vector2(-60.0f, 60.0f);
@@ -23,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     private Camera camera;
 
+    private float cameraY = 1.8f;
+
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        cameraY = Camera.main.transform.position.y;
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -48,20 +50,22 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            movement += moveSpeed * transform.forward;
+            movement += transform.forward;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            movement -= moveSpeed * transform.forward;
+            movement -= transform.forward;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            movement -= moveSpeed * transform.right;
+            movement -= transform.right;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            movement += moveSpeed * transform.right;
+            movement += transform.right;
         }
+
+        movement = movement.normalized * moveSpeed;
 
         cc.Move(movement * Time.deltaTime);
 
