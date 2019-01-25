@@ -7,11 +7,10 @@ public class ItemManager : MonoBehaviour
 
     Camera cam;
     RaycastHit hit;
-    Transform itemHoldPos;
-
+    [SerializeField] Transform itemHoldPos;
+    [SerializeField] float travelTime = 0.1f;
 
     GameObject currentItem;
-    bool holdingItem = false;
 
 
     void Start()
@@ -30,9 +29,11 @@ public class ItemManager : MonoBehaviour
             {
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10))
                 {
-                    if (Input.GetMouseButton(0))
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        MoveObjectAToB(currentItem, hit.transform.position + (Vector3.up * (hit.transform.localScale.y / 2)), 0.1f);
+                        Debug.Log(hit.transform.gameObject);
+                        StartCoroutine(MoveObjectAToB(currentItem, hit.point + (Vector3.up * (hit.transform.localScale.y / 2)), travelTime));
+                        currentItem.transform.parent = null;
                         currentItem = null;
                     }
                 }
@@ -45,10 +46,12 @@ public class ItemManager : MonoBehaviour
             {
                 if (hit.transform.tag == "Pickupable")
                 {
-                    if (Input.GetMouseButton(0))
+                    if (Input.GetMouseButtonDown(0))
                     {
+                  
                         currentItem = hit.transform.gameObject;
-                        MoveObjectAToB(currentItem, itemHoldPos.position, 0.1f);
+                        currentItem.transform.parent = itemHoldPos;
+                        StartCoroutine(MoveObjectAToB(currentItem, itemHoldPos.position, travelTime));
                     }
                 }
             }
@@ -56,11 +59,11 @@ public class ItemManager : MonoBehaviour
 
     }
 
-    IEnumerable MoveObjectAToB(GameObject go1, Vector3 finalPos, float amoutOfTime)
+    IEnumerator MoveObjectAToB(GameObject go1, Vector3 finalPos, float amoutOfTime)
     {
         float length = Vector3.Distance(go1.transform.position, finalPos);
         Vector3 startPostion = go1.transform.position;
-        Vector3 direction = (itemHoldPos.position - startPostion).normalized;
+        Vector3 direction = (finalPos - startPostion).normalized;
         float speed = length / amoutOfTime;
         float remainingTime = amoutOfTime;
         while (true)
@@ -68,16 +71,16 @@ public class ItemManager : MonoBehaviour
 
             if (remainingTime < Time.deltaTime)
             {
-                go1.transform.position = finalPos;
+                //go1.transform.position = finalPos;
+            go1.transform.position += direction * speed * remainingTime;
                 break;
 
             }
             go1.transform.position += direction * speed * Time.deltaTime;
             remainingTime -= Time.deltaTime;
-            return null;
+            yield return null;
 
         }
-        return null;
     }
 
 }
