@@ -566,3 +566,4 @@ $RECYCLE.BIN/
 # BeatPulse healthcheck temp database
 
 # End of https://www.gitignore.io/api/unity,csharp,windows,visualstudio
+GGJ19/Assets/Shaderforge/
