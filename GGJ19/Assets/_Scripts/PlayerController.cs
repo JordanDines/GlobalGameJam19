@@ -15,12 +15,16 @@ public class PlayerController : MonoBehaviour
     private Vector2 cameraXMinMax = new Vector2(-60.0f, 60.0f);
 
     [SerializeField]
+    private float cameraLerpSpeed = 10.0f;
+
+    [SerializeField]
     private AnimationCurve bobbingCurve;
 
     private float bobbingTime = 0;
 
     private CharacterController cc;
 
+    private Vector2 targetRotation;
     private Vector2 rotation;
 
     private Camera camera;
@@ -32,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
+        targetRotation = Vector2.zero;
         rotation = Vector2.zero;
         camera = Camera.main;
     }
@@ -99,12 +104,14 @@ public class PlayerController : MonoBehaviour
 
     private void Mouse()
     {
-        rotation += new Vector2(Input.GetAxis("Mouse Y") * mouseSensitivity.x, Input.GetAxis("Mouse X") * mouseSensitivity.y);
+        targetRotation += new Vector2(Input.GetAxis("Mouse Y") * mouseSensitivity.x, Input.GetAxis("Mouse X") * mouseSensitivity.y);
 
-        rotation.x = Mathf.Clamp(rotation.x, cameraXMinMax.x, cameraXMinMax.y);
+        targetRotation.x = Mathf.Clamp(targetRotation.x, cameraXMinMax.x, cameraXMinMax.y);
+
+        // Smoothly move the camera
+        rotation = Vector2.Lerp(rotation, targetRotation, cameraLerpSpeed * Time.deltaTime);
 
         transform.localEulerAngles = new Vector3(0, rotation.y, 0);
-
         camera.transform.localEulerAngles = new Vector3(-rotation.x, rotation.y, 0);
 
     }
