@@ -18,50 +18,41 @@ public class PlayerController : MonoBehaviour
     private float cameraLerpSpeed = 10.0f;
 
     [SerializeField]
-    private AnimationCurve bobbingCurve;
-
-    private float bobbingTime = 0;
+    private GameObject cameraPivot;
 
     private CharacterController cc;
 
     private Vector2 targetRotation;
     private Vector2 rotation;
 
-    private Camera camera;
+    private Camera cam;
 
-    private float cameraHeight;
+    private Animator animator;
 
     private bool moving = false;
+    private bool onBed = false;
 
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
         targetRotation = Vector2.zero;
         rotation = Vector2.zero;
-        camera = Camera.main;
+        cam = Camera.main;
+        animator = GetComponent<Animator>();
     }
 
     private void Start()
     {
-        cameraHeight = Camera.main.transform.position.y;
-
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
-        if (moving)
-        {
-            bobbingTime += Time.deltaTime;
-            if (bobbingTime > 1)
-            {
-                bobbingTime -= 1;
-            }
-        }
-
         Movement();
 
         Mouse();
+
+        Animations();
     }
 
     private void Movement()
@@ -99,7 +90,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Move the camera with the player
-        camera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraHeight + bobbingCurve.Evaluate(bobbingTime), transform.position.z);
+        cam.transform.position = cameraPivot.transform.position;
     }
 
     private void Mouse()
@@ -112,7 +103,13 @@ public class PlayerController : MonoBehaviour
         rotation = Vector2.Lerp(rotation, targetRotation, cameraLerpSpeed * Time.deltaTime);
 
         transform.localEulerAngles = new Vector3(0, rotation.y, 0);
-        camera.transform.localEulerAngles = new Vector3(-rotation.x, rotation.y, 0);
+        cam.transform.localEulerAngles = new Vector3(-rotation.x, rotation.y, 0);
 
+    }
+
+    private void Animations()
+    {
+        animator.SetBool("Moving", moving);
+        animator.SetBool("OnBed", onBed);
     }
 }
