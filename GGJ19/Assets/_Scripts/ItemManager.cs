@@ -7,6 +7,7 @@ public class ItemManager : MonoBehaviour
 
     Camera cam;
     RaycastHit hit;
+    [SerializeField] Animator ArmsAC;
     [SerializeField] Transform itemHoldPos;
     [SerializeField] float travelTime = 0.1f;
 
@@ -31,7 +32,7 @@ public class ItemManager : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        Debug.Log(hit.transform.gameObject);
+                        ArmsAC.SetTrigger("action");
                         StartCoroutine(MoveObjectAToB(currentItem, hit.point + (Vector3.up * (hit.transform.localScale.y / 2)), travelTime));
                         currentItem.transform.parent = null;
                         currentItem = null;
@@ -48,7 +49,7 @@ public class ItemManager : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                  
+                        ArmsAC.SetTrigger("action");
                         currentItem = hit.transform.gameObject;
                         currentItem.transform.parent = itemHoldPos;
                         StartCoroutine(MoveObjectAToB(currentItem, itemHoldPos.position, travelTime));
