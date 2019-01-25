@@ -11,9 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Vector2 mouseSensitivity = new Vector2(1, 1);
 
-
     [SerializeField]
     private Vector2 cameraXMinMax = new Vector2(-60.0f, 60.0f);
+
+    [SerializeField]
+    private AnimationCurve bobbingCurve;
+
+    private float bobbingTime = 0;
 
     private CharacterController cc;
 
@@ -21,7 +25,9 @@ public class PlayerController : MonoBehaviour
 
     private Camera camera;
 
-    private float cameraY = 1.8f;
+    private float cameraHeight;
+
+    private bool moving = false;
 
     private void Awake()
     {
@@ -32,13 +38,22 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        cameraY = Camera.main.transform.position.y;
+        cameraHeight = Camera.main.transform.position.y;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
+        if (moving)
+        {
+            bobbingTime += Time.deltaTime;
+            if (bobbingTime > 1)
+            {
+                bobbingTime -= 1;
+            }
+        }
+
         Movement();
 
         Mouse();
@@ -65,12 +80,21 @@ public class PlayerController : MonoBehaviour
             movement += transform.right;
         }
 
-        movement = movement.normalized * moveSpeed;
+        if (movement.magnitude > 0)
+        {
+            movement = movement.normalized * moveSpeed;
 
-        cc.Move(movement * Time.deltaTime);
+            cc.Move(movement * Time.deltaTime);
+
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
 
         // Move the camera with the player
-        camera.transform.position = new Vector3(transform.position.x, cameraY, transform.position.z);
+        camera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraHeight + bobbingCurve.Evaluate(bobbingTime), transform.position.z);
     }
 
     private void Mouse()
