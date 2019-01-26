@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private AnimationCurve shuffleSpeedCurve;
 
+    [SerializeField] Animator ArmsAC;
+
+
     private CharacterController cc;
 
     private float targetSpeed;
@@ -104,9 +107,15 @@ public class PlayerController : MonoBehaviour
         }
 
         if (movement.magnitude > 0)
+        {
             moving = true;
+            ArmsAC.SetBool("isWalking", true);
+        }   
         else
+        {
             moving = false;
+            ArmsAC.SetBool("isWalking", false);
+        }
 
         if (onBed)
         {

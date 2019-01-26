@@ -1,0 +1,230 @@
+fileFormatVersion: 2
+guid: f536bb3b19e4db2429373aef4054a0a4
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: centre_jnt
+    100004: forearm_L_jnt01
+    100006: forearm_R_jnt01
+    100008: hand_L_ctrl
+    100010: hand_L_jnt01
+    100012: hand_R_ctrl
+    100014: hand_R_jnt01
+    100016: index_L_ctrl01
+    100018: index_L_ctrl02
+    100020: index_L_ctrl02 1
+    100022: index_L_ctrl03
+    100024: index_L_ctrl03 1
+    100026: index_L_jnt01
+    100028: index_L_jnt02
+    100030: index_L_jnt03
+    100032: index_R_ctrl01
+    100034: index_R_jnt01
+    100036: index_R_jnt02
+    100038: index_R_jnt03
+    100040: middle_L_ctrl01
+    100042: middle_L_ctrl02
+    100044: middle_L_ctrl02 1
+    100046: middle_L_ctrl03
+    100048: middle_L_ctrl03 1
+    100050: middle_L_jnt01
+    100052: middle_L_jnt02
+    100054: middle_L_jnt03
+    100056: middle_R_ctrl01
+    100058: middle_R_jnt01
+    100060: middle_R_jnt02
+    100062: middle_R_jnt03
+    100064: pinky_L_ctrl01
+    100066: pinky_L_ctrl02
+    100068: pinky_L_ctrl02 1
+    100070: pinky_L_ctrl03
+    100072: pinky_L_ctrl03 1
+    100074: pinky_L_jnt01
+    100076: pinky_L_jnt02
+    100078: pinky_L_jnt03
+    100080: pinky_R_ctrl01
+    100082: pinky_R_jnt01
+    100084: pinky_R_jnt02
+    100086: pinky_R_jnt03
+    100088: ring_L_ctrl01
+    100090: ring_L_ctrl02
+    100092: ring_L_ctrl02 1
+    100094: ring_L_ctrl03
+    100096: ring_L_ctrl03 1
+    100098: ring_L_jnt01
+    100100: ring_L_jnt02
+    100102: ring_L_jnt03
+    100104: ring_R_ctrl01
+    100106: ring_R_jnt01
+    100108: ring_R_jnt02
+    100110: ring_R_jnt03
+    100112: shoulder_L_jnt01
+    100114: shoulder_R_jnt01
+    100116: thumb_L_ctrl01
+    100118: thumb_L_ctrl02
+    100120: thumb_L_ctrl02 1
+    100122: thumb_L_ctrl03
+    100124: thumb_L_ctrl03 1
+    100126: thumb_L_jnt01
+    100128: thumb_L_jnt02
+    100130: thumb_L_jnt03
+    100132: thumb_R_ctrl01
+    100134: thumb_R_jnt01
+    100136: thumb_R_jnt02
+    100138: thumb_R_jnt03
+    400000: //RootNode
+    400002: centre_jnt
+    400004: forearm_L_jnt01
+    400006: forearm_R_jnt01
+    400008: hand_L_ctrl
+    400010: hand_L_jnt01
+    400012: hand_R_ctrl
+    400014: hand_R_jnt01
+    400016: index_L_ctrl01
+    400018: index_L_ctrl02
+    400020: index_L_ctrl02 1
+    400022: index_L_ctrl03
+    400024: index_L_ctrl03 1
+    400026: index_L_jnt01
+    400028: index_L_jnt02
+    400030: index_L_jnt03
+    400032: index_R_ctrl01
+    400034: index_R_jnt01
+    400036: index_R_jnt02
+    400038: index_R_jnt03
+    400040: middle_L_ctrl01
+    400042: middle_L_ctrl02
+    400044: middle_L_ctrl02 1
+    400046: middle_L_ctrl03
+    400048: middle_L_ctrl03 1
+    400050: middle_L_jnt01
+    400052: middle_L_jnt02
+    400054: middle_L_jnt03
+    400056: middle_R_ctrl01
+    400058: middle_R_jnt01
+    400060: middle_R_jnt02
+    400062: middle_R_jnt03
+    400064: pinky_L_ctrl01
+    400066: pinky_L_ctrl02
+    400068: pinky_L_ctrl02 1
+    400070: pinky_L_ctrl03
+    400072: pinky_L_ctrl03 1
+    400074: pinky_L_jnt01
+    400076: pinky_L_jnt02
+    400078: pinky_L_jnt03
+    400080: pinky_R_ctrl01
+    400082: pinky_R_jnt01
+    400084: pinky_R_jnt02
+    400086: pinky_R_jnt03
+    400088: ring_L_ctrl01
+    400090: ring_L_ctrl02
+    400092: ring_L_ctrl02 1
+    400094: ring_L_ctrl03
+    400096: ring_L_ctrl03 1
+    400098: ring_L_jnt01
+    400100: ring_L_jnt02
+    400102: ring_L_jnt03
+    400104: ring_R_ctrl01
+    400106: ring_R_jnt01
+    400108: ring_R_jnt02
+    400110: ring_R_jnt03
+    400112: shoulder_L_jnt01
+    400114: shoulder_R_jnt01
+    400116: thumb_L_ctrl01
+    400118: thumb_L_ctrl02
+    400120: thumb_L_ctrl02 1
+    400122: thumb_L_ctrl03
+    400124: thumb_L_ctrl03 1
+    400126: thumb_L_jnt01
+    400128: thumb_L_jnt02
+    400130: thumb_L_jnt03
+    400132: thumb_R_ctrl01
+    400134: thumb_R_jnt01
+    400136: thumb_R_jnt02
+    400138: thumb_R_jnt03
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

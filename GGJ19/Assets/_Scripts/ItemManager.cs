@@ -12,7 +12,7 @@ public class ItemManager : MonoBehaviour
     RaycastHit[] hits;
 
     [SerializeField] Animator ArmsAC;
-    [SerializeField] Transform itemHoldPos;
+    [SerializeField] GameObject itemHoldPos;
     [SerializeField] float travelTime = 0.1f;
     [SerializeField] GameObject reticle;
 
@@ -38,34 +38,20 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10))
-        {
-            if (!reticle.activeInHierarchy)
-            {
-                reticle.SetActive(true);
-            }
-
-            reticle.transform.position = hit.point;
-        }
-        else
-        {
-            if (reticle.activeInHierarchy)
-            {
-                reticle.SetActive(false);
-            }
-        }
-
         //dropping
         if (currentItem != null)
         {
             if (Input.GetMouseButton(0))
             {
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10))
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 1))
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    if (hit.transform.tag == "Placeable")
                     {
-                        if (hit.transform.tag == "Placeable")
+
+
+                        if (Input.GetMouseButtonDown(0))
                         {
+
                             if (colorGradingLayer.saturation.value + saturationIncreaseAmount <= maxSaturation)
                             {
                                 StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, colorGradingLayer.saturation.value + saturationIncreaseAmount, saturationLerpTime));
@@ -78,8 +64,10 @@ public class ItemManager : MonoBehaviour
                                 }
                             }
 
-                            ArmsAC.SetTrigger("action");
-                            StartCoroutine(MoveObjectAToB(currentItem, hit.point + (Vector3.up * (hit.transform.localScale.y / 2)), travelTime));
+                            ArmsAC.SetBool("isHolding", false);
+                            GameObject temp = new GameObject();
+                            temp.transform.position = (hit.point + (Vector3.up * (hit.transform.localScale.y / 2)));
+                            StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
                             currentItem.transform.parent = null;
                             currentItem = null;
                         }
@@ -87,6 +75,7 @@ public class ItemManager : MonoBehaviour
                 }
             }
         }
+
         //pickingup
         else
         {
@@ -98,10 +87,11 @@ public class ItemManager : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        ArmsAC.SetTrigger("action");
+                        StartCoroutine(MoveObjectAToB(currenthit.transform.gameObject, itemHoldPos, travelTime));
                         currentItem = currenthit.transform.gameObject;
-                        currentItem.transform.parent = itemHoldPos;
-                        StartCoroutine(MoveObjectAToB(currentItem, itemHoldPos.position, travelTime));
+                        Debug.Log(currentItem);
+                        currentItem.transform.parent = itemHoldPos.transform;
+                        ArmsAC.SetBool("isHolding", true);
                     }
                 }
             }
@@ -130,28 +120,29 @@ public class ItemManager : MonoBehaviour
 
 
 
-    IEnumerator MoveObjectAToB(GameObject go1, Vector3 finalPos, float amoutOfTime)
+    IEnumerator MoveObjectAToB(GameObject go1, GameObject finalPos, float amoutOfTime, bool destroyGO = false)
     {
-        float length = Vector3.Distance(go1.transform.position, finalPos);
-        Vector3 startPostion = go1.transform.position;
-        Vector3 direction = (finalPos - startPostion).normalized;
-        float speed = length / amoutOfTime;
-        float remainingTime = amoutOfTime;
-        while (true)
+        float currentTime = 0;
+        float timeAsPercent = 0;
+
+        Vector3 startValue = go1.transform.position;
+
+        while (timeAsPercent <= 1)
         {
+            currentTime += Time.deltaTime;
+            timeAsPercent = currentTime / amoutOfTime;
 
-            if (remainingTime < Time.deltaTime)
-            {
-                //go1.transform.position = finalPos;
-                go1.transform.position += direction * speed * remainingTime;
-                break;
-
-            }
-            go1.transform.position += direction * speed * Time.deltaTime;
-            remainingTime -= Time.deltaTime;
+            go1.transform.position = Vector3.Lerp(startValue, finalPos.transform.position, timeAsPercent);
             yield return null;
-
         }
+
+        if (destroyGO)
+        {
+            Destroy(finalPos);
+        }
+
+
+     
     }
 
 }
