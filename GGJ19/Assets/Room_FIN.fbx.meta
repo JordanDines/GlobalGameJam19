@@ -1,0 +1,197 @@
+fileFormatVersion: 2
+guid: 64943baa87748f040b2b5cc1ff57391d
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Bed
+    100002: Bed_Frame
+    100004: Bedside_Table
+    100006: Blinds
+    100008: Ceiling
+    100010: Chair
+    100012: Desk
+    100014: Door
+    100016: Door_Wall
+    100018: Floor
+    100020: Mattress
+    100022: Pillow_1
+    100024: Pillow_2
+    100026: Plain_Wall
+    100028: Plain_Wall02
+    100030: //RootNode
+    100032: Round_Pillow
+    100034: Shelves
+    100036: Socket
+    100038: Tallboy
+    100040: Window_Wall
+    400000: Bed
+    400002: Bed_Frame
+    400004: Bedside_Table
+    400006: Blinds
+    400008: Ceiling
+    400010: Chair
+    400012: Desk
+    400014: Door
+    400016: Door_Wall
+    400018: Floor
+    400020: Mattress
+    400022: Pillow_1
+    400024: Pillow_2
+    400026: Plain_Wall
+    400028: Plain_Wall02
+    400030: //RootNode
+    400032: Round_Pillow
+    400034: Shelves
+    400036: Socket
+    400038: Tallboy
+    400040: Window_Wall
+    2100000: Door_Wall1
+    2100002: Window_Ceiling
+    2100004: PlainWalls
+    2100006: Door_Blinds
+    2100008: Bed1
+    2100010: BedsideShelves
+    2100012: DeskTableSocket
+    2100014: Tallboy1
+    2100016: Floor1
+    2300000: Bed_Frame
+    2300002: Bedside_Table
+    2300004: Blinds
+    2300006: Ceiling
+    2300008: Chair
+    2300010: Desk
+    2300012: Door
+    2300014: Door_Wall
+    2300016: Floor
+    2300018: Mattress
+    2300020: Pillow_1
+    2300022: Pillow_2
+    2300024: Plain_Wall
+    2300026: Plain_Wall02
+    2300028: Round_Pillow
+    2300030: Shelves
+    2300032: Socket
+    2300034: Tallboy
+    2300036: Window_Wall
+    3300000: Bed_Frame
+    3300002: Bedside_Table
+    3300004: Blinds
+    3300006: Ceiling
+    3300008: Chair
+    3300010: Desk
+    3300012: Door
+    3300014: Door_Wall
+    3300016: Floor
+    3300018: Mattress
+    3300020: Pillow_1
+    3300022: Pillow_2
+    3300024: Plain_Wall
+    3300026: Plain_Wall02
+    3300028: Round_Pillow
+    3300030: Shelves
+    3300032: Socket
+    3300034: Tallboy
+    3300036: Window_Wall
+    4300000: Door_Wall
+    4300002: Window_Wall
+    4300004: Plain_Wall
+    4300006: Plain_Wall02
+    4300008: Ceiling
+    4300010: Door
+    4300012: Blinds
+    4300014: Round_Pillow
+    4300016: Bed_Frame
+    4300018: Pillow_2
+    4300020: Pillow_1
+    4300022: Mattress
+    4300024: Bedside_Table
+    4300026: Desk
+    4300028: Shelves
+    4300030: Chair
+    4300032: Socket
+    4300034: Tallboy
+    4300036: Floor
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
