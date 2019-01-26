@@ -10,6 +10,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] Animator ArmsAC;
     [SerializeField] Transform itemHoldPos;
     [SerializeField] float travelTime = 0.1f;
+    [SerializeField] GameObject reticle;
 
     GameObject currentItem;
 
@@ -23,6 +24,23 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10))
+        {
+            if(!reticle.activeInHierarchy)
+            {
+                reticle.SetActive(true);
+            }
+
+            reticle.transform.position = hit.point;
+        }
+        else
+        {
+            if (reticle.activeInHierarchy)
+            {
+                reticle.SetActive(false);
+            }
+        }
+
         //dropping
         if (currentItem != null)
         {
