@@ -23,6 +23,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] float saturationLerpTime = 2;
     ColorGrading colorGradingLayer;
 
+    int itemPlaceCount = 0;
 
 
     GameObject currentItem;
@@ -66,10 +67,12 @@ public class ItemManager : MonoBehaviour
 
                         ArmsAC.SetBool("isHolding", false);
                         GameObject temp = new GameObject();
-                        temp.transform.position = (hit.point + (Vector3.up * (hit.transform.localScale.y / 2)));
-                        StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
                         currentItem.transform.parent = null;
+                        temp.transform.position = hit.point + Vector3.up * currentItem.transform.localScale.y / 2;
+                        StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
+                        currentItem.transform.tag = "Untagged";
                         currentItem = null;
+                        itemPlaceCount++;
                     }
                 }
                 else
@@ -97,7 +100,6 @@ public class ItemManager : MonoBehaviour
                     {
                         StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime));
                         currentItem = hit.transform.gameObject;
-                        Debug.Log(currentItem);
                         currentItem.transform.parent = itemHoldPos.transform;
                         ArmsAC.SetBool("isHolding", true);
                     }
@@ -159,8 +161,6 @@ public class ItemManager : MonoBehaviour
         {
             Destroy(finalPos);
         }
-
-
 
     }
 
