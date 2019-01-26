@@ -98,9 +98,9 @@ public class ItemManager : MonoBehaviour
                     crosshair.Resizing = true;
                     if (Input.GetMouseButtonDown(0))
                     {
-                        StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime));
                         currentItem = hit.transform.gameObject;
-                        currentItem.transform.parent = itemHoldPos.transform;
+                        currentItem.transform.parent = hit.transform.GetComponent<ItemInfo>().targetTrasform.transform;
+                        StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime));
                         ArmsAC.SetBool("isHolding", true);
                     }
                 }
@@ -144,6 +144,7 @@ public class ItemManager : MonoBehaviour
         float timeAsPercent = 0;
 
         Vector3 startValue = go1.transform.position;
+        Vector3 finalPosition = Vector3.zero;
         Quaternion startRot = go1.transform.rotation;
         Quaternion finalRot = Quaternion.LookRotation(Vector3.forward, Vector3.up);
 
@@ -152,7 +153,7 @@ public class ItemManager : MonoBehaviour
             currentTime += Time.deltaTime;
             timeAsPercent = currentTime / amoutOfTime;
 
-            go1.transform.position = Vector3.Lerp(startValue, finalPos.transform.position, timeAsPercent);
+            go1.transform.localPosition = Vector3.Lerp(startValue, finalPosition, timeAsPercent);
             go1.transform.localRotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
             go1.transform.rotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
             yield return null;
