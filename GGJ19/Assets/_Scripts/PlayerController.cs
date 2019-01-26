@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 3;
     [SerializeField]
     private float shuffleSpeed = 2;
+    [SerializeField]
+    private float shuffleFreq = 1;
 
     [SerializeField]
     private float smoothMove = 15.0f;
@@ -25,6 +27,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject cameraPivot;
 
+    [SerializeField]
+    private AnimationCurve shuffleSpeedCurve;
+
     private CharacterController cc;
 
     private float targetSpeed;
@@ -39,6 +44,8 @@ public class PlayerController : MonoBehaviour
 
     private bool moving = false;
     private bool onBed = false;
+
+    private float shuffleTime = 0;
 
     enum PlayerState
     {
@@ -101,7 +108,18 @@ public class PlayerController : MonoBehaviour
         else
             moving = false;
 
-        targetSpeed = moving ? (onBed ? shuffleSpeed : moveSpeed) : 0;
+        if (onBed)
+        {
+            shuffleTime += Time.deltaTime * shuffleFreq;
+            if (shuffleTime > 1)
+                shuffleTime -= 1;
+        }
+        else
+        {
+            shuffleTime = 0;
+        }
+
+        targetSpeed = moving ? (onBed ? shuffleSpeedCurve.Evaluate(shuffleTime) * shuffleSpeed : moveSpeed) : 0;
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, smoothMove * Time.deltaTime);
 
