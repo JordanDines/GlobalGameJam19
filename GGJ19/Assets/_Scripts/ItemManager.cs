@@ -9,6 +9,8 @@ public class ItemManager : MonoBehaviour
 
     Camera cam;
     RaycastHit hit;
+    RaycastHit[] hits;
+
     [SerializeField] Animator ArmsAC;
     [SerializeField] Transform itemHoldPos;
     [SerializeField] float travelTime = 0.1f;
@@ -62,22 +64,25 @@ public class ItemManager : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (colorGradingLayer.saturation.value + saturationIncreaseAmount <= maxSaturation)
+                        if (hit.transform.tag == "Placeable")
                         {
-                            StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, colorGradingLayer.saturation.value + saturationIncreaseAmount, saturationLerpTime));
-                        }
-                        else
-                        {
-                            if (colorGradingLayer.saturation.value != maxSaturation)
+                            if (colorGradingLayer.saturation.value + saturationIncreaseAmount <= maxSaturation)
                             {
-                                StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, maxSaturation, saturationLerpTime));
+                                StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, colorGradingLayer.saturation.value + saturationIncreaseAmount, saturationLerpTime));
                             }
-                        }
+                            else
+                            {
+                                if (colorGradingLayer.saturation.value != maxSaturation)
+                                {
+                                    StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, maxSaturation, saturationLerpTime));
+                                }
+                            }
 
-                        ArmsAC.SetTrigger("action");
-                        StartCoroutine(MoveObjectAToB(currentItem, hit.point + (Vector3.up * (hit.transform.localScale.y / 2)), travelTime));
-                        currentItem.transform.parent = null;
-                        currentItem = null;
+                            ArmsAC.SetTrigger("action");
+                            StartCoroutine(MoveObjectAToB(currentItem, hit.point + (Vector3.up * (hit.transform.localScale.y / 2)), travelTime));
+                            currentItem.transform.parent = null;
+                            currentItem = null;
+                        }
                     }
                 }
             }
@@ -85,19 +90,22 @@ public class ItemManager : MonoBehaviour
         //pickingup
         else
         {
-            if (Physics.SphereCast(cam.transform.position, 2, cam.transform.forward, out hit, 10))
+            hits = Physics.SphereCastAll(cam.transform.position, 2, cam.transform.forward, 10);
+
+            foreach (var currenthit in hits)
             {
-                if (hit.transform.tag == "Pickupable")
+                if (currenthit.transform.tag == "Pickupable")
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
                         ArmsAC.SetTrigger("action");
-                        currentItem = hit.transform.gameObject;
+                        currentItem = currenthit.transform.gameObject;
                         currentItem.transform.parent = itemHoldPos;
                         StartCoroutine(MoveObjectAToB(currentItem, itemHoldPos.position, travelTime));
                     }
                 }
             }
+
         }
 
     }
@@ -106,7 +114,7 @@ public class ItemManager : MonoBehaviour
     {
         float currentTime = 0;
         float timeAsPercent = 0;
-    
+
         float startValue = valueToChange.value;
 
         while (timeAsPercent <= 1)
