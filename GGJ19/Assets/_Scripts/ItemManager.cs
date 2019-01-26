@@ -66,7 +66,7 @@ public class ItemManager : MonoBehaviour
                         currentItem.GetComponent<SfxPickUpDropOff>().PlayDropOffSFX();
                         GameObject temp = new GameObject();
                         currentItem.transform.parent = null;
-                        temp.transform.position = hit.point;// + Vector3.up * currentItem.transform.localScale.y / 2;
+                        temp.transform.position = hit.point + Vector3.up * currentItem.transform.localScale.y / 2;
                         StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
                         currentItem.transform.tag = "Untagged";
                         currentItem = null;
@@ -89,7 +89,7 @@ public class ItemManager : MonoBehaviour
         else
         {
 
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2))
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2, LayerMask.GetMask("Pickupables")))
             {
                 if (hit.transform.tag == "Pickupable")
                 {
