@@ -153,6 +153,7 @@ public class ItemManager : MonoBehaviour
             timeAsPercent = currentTime / amoutOfTime;
 
             go1.transform.position = Vector3.Lerp(startValue, finalPos.transform.position, timeAsPercent);
+            go1.transform.localRotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
             go1.transform.rotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
             yield return null;
         }
