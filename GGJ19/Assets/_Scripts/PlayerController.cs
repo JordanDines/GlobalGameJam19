@@ -32,6 +32,14 @@ public class PlayerController : MonoBehaviour
     private bool moving = false;
     private bool onBed = false;
 
+    enum PlayerState
+    {
+        Default,
+        Interacting
+    }
+
+    private PlayerState state;
+
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
@@ -44,15 +52,19 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        state = PlayerState.Default;
     }
 
     private void Update()
     {
-        Movement();
+        if (state != PlayerState.Interacting)
+        {
+            Movement();
 
-        Mouse();
+            Mouse();
 
-        Animations();
+            Animations();
+        }
     }
 
     private void Movement()
@@ -111,5 +123,21 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool("Moving", moving);
         animator.SetBool("OnBed", onBed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bed")
+        {
+            onBed = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Bed")
+        {
+            onBed = false;
+        }
     }
 }
