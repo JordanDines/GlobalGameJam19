@@ -25,7 +25,17 @@ public class ItemManager : MonoBehaviour
 
     int itemPlaceCount = 0;
 
+
+
     GameObject currentItem;
+
+    public int ItemPlaceCount
+    {
+        get
+        {
+            return itemPlaceCount;
+        }
+    }
 
     void Start()
     {
@@ -39,6 +49,7 @@ public class ItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if()
         //dropping
         if (currentItem != null)
         {
