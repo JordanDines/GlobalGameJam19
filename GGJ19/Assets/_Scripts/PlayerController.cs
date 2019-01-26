@@ -6,7 +6,12 @@ public class PlayerController : MonoBehaviour
 {
 
     [SerializeField]
-    private float moveSpeed = 10;
+    private float moveSpeed = 3;
+    [SerializeField]
+    private float shuffleSpeed = 2;
+
+    [SerializeField]
+    private float smoothMove = 15.0f;
 
     [SerializeField]
     private Vector2 mouseSensitivity = new Vector2(1, 1);
@@ -22,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController cc;
 
+    private float targetSpeed;
+    private float currentSpeed;
+
     private Vector2 targetRotation;
     private Vector2 rotation;
 
@@ -31,6 +39,14 @@ public class PlayerController : MonoBehaviour
 
     private bool moving = false;
     private bool onBed = false;
+
+    enum PlayerState
+    {
+        Default,
+        Interacting
+    }
+
+    private PlayerState state;
 
     private void Awake()
     {
@@ -44,15 +60,19 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        state = PlayerState.Default;
     }
 
     private void Update()
     {
-        Movement();
+        if (state != PlayerState.Interacting)
+        {
+            Movement();
 
-        Mouse();
+            Mouse();
 
-        Animations();
+            Animations();
+        }
     }
 
     private void Movement()
@@ -77,17 +97,19 @@ public class PlayerController : MonoBehaviour
         }
 
         if (movement.magnitude > 0)
-        {
-            movement = movement.normalized * moveSpeed;
-
-            cc.Move(movement * Time.deltaTime);
-
             moving = true;
-        }
         else
-        {
             moving = false;
+
+        targetSpeed = moving ? (onBed ? shuffleSpeed : moveSpeed) : 0;
+
+        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, smoothMove * Time.deltaTime);
+
+        {
+            movement = movement.normalized * currentSpeed;
+            cc.Move(movement * Time.deltaTime);
         }
+
 
         // Move the camera with the player
         cam.transform.position = cameraPivot.transform.position;
@@ -111,5 +133,21 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool("Moving", moving);
         animator.SetBool("OnBed", onBed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bed")
+        {
+            onBed = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Bed")
+        {
+            onBed = false;
+        }
     }
 }
