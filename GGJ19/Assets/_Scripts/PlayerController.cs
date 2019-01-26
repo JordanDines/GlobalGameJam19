@@ -6,7 +6,9 @@ public class PlayerController : MonoBehaviour
 {
 
     [SerializeField]
-    private float moveSpeed = 10;
+    private float moveSpeed = 3;
+    [SerializeField]
+    private float shuffleSpeed = 2;
 
     [SerializeField]
     private Vector2 mouseSensitivity = new Vector2(1, 1);
@@ -90,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
         if (movement.magnitude > 0)
         {
-            movement = movement.normalized * moveSpeed;
+            movement = movement.normalized * (onBed ? shuffleSpeed : moveSpeed);
 
             cc.Move(movement * Time.deltaTime);
 
