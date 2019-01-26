@@ -33,7 +33,7 @@ public class SfxManager : MonoBehaviour
 
     }
 
-    public static AudioClip GetPickUpDropOffAudioClip(SFXClips SFX, bool pickUp)
+    public  AudioClip GetPickUpDropOffAudioClip(SFXClips SFX, bool pickUp)
     {
         List<AudioClip> returnClip = null;
         clips.TryGetValue(SFX, out returnClip);
@@ -47,7 +47,7 @@ public class SfxManager : MonoBehaviour
         }
     }
 
-    public static AudioClip GetRandomFootStep()
+    public  AudioClip GetRandomFootStep()
     {
         List<AudioClip> returnClip = null;
         clips.TryGetValue(SFXClips.Footstep, out returnClip);
