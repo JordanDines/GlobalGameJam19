@@ -142,6 +142,8 @@ public class ItemManager : MonoBehaviour
         float timeAsPercent = 0;
 
         Vector3 startValue = go1.transform.position;
+        Quaternion startRot = go1.transform.rotation;
+        Quaternion finalRot = Quaternion.LookRotation(Vector3.forward, Vector3.up);
 
         while (timeAsPercent <= 1)
         {
@@ -149,6 +151,7 @@ public class ItemManager : MonoBehaviour
             timeAsPercent = currentTime / amoutOfTime;
 
             go1.transform.position = Vector3.Lerp(startValue, finalPos.transform.position, timeAsPercent);
+            go1.transform.rotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
             yield return null;
         }
 
