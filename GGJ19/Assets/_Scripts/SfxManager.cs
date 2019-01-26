@@ -18,7 +18,7 @@ public class SfxManager : MonoBehaviour
 {
 
     [SerializeField] List<AudioClip> prefabClips = new List<AudioClip>();
-    static public Dictionary<SFXClips, List<AudioClip>> clips;
+    static public Dictionary<SFXClips, List<AudioClip>> clips = new Dictionary<SFXClips, List<AudioClip>>();
 
     void Start()
     {
