@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     private float shuffleSpeed = 2;
 
     [SerializeField]
+    private float smoothMove = 15.0f;
+
+    [SerializeField]
     private Vector2 mouseSensitivity = new Vector2(1, 1);
 
     [SerializeField]
@@ -23,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private GameObject cameraPivot;
 
     private CharacterController cc;
+
+    private float targetSpeed;
+    private float currentSpeed;
 
     private Vector2 targetRotation;
     private Vector2 rotation;
@@ -91,17 +97,19 @@ public class PlayerController : MonoBehaviour
         }
 
         if (movement.magnitude > 0)
-        {
-            movement = movement.normalized * (onBed ? shuffleSpeed : moveSpeed);
-
-            cc.Move(movement * Time.deltaTime);
-
             moving = true;
-        }
         else
-        {
             moving = false;
+
+        targetSpeed = moving ? (onBed ? shuffleSpeed : moveSpeed) : 0;
+
+        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, smoothMove * Time.deltaTime);
+
+        {
+            movement = movement.normalized * currentSpeed;
+            cc.Move(movement * Time.deltaTime);
         }
+
 
         // Move the camera with the player
         cam.transform.position = cameraPivot.transform.position;
