@@ -40,9 +40,7 @@ public class Crosshair : MonoBehaviour
     void Update()
     {
 
-        //for demonstration purposes
-        if (Input.GetMouseButton(0)) { resizing = true; } else { resizing = false; }
-
+        
         if (resizeable)
         {
             if (resizing)
@@ -81,9 +79,6 @@ public class Crosshair : MonoBehaviour
         GUI.DrawTexture(new Rect((Screen.width / 2 - height / 2) - spread / 2, Screen.height / 2 - width / 2, height, width), texture);
     }
 
-    public void SetRisizing(bool state)
-    {
-        resizing = state;
-    }
+
 
 }

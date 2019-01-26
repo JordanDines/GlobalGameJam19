@@ -6,10 +6,11 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class ItemManager : MonoBehaviour
 {
-
     Camera cam;
     RaycastHit hit;
     RaycastHit[] hits;
+
+    Crosshair crosshair;
 
     [SerializeField] Animator ArmsAC;
     [SerializeField] GameObject itemHoldPos;
@@ -22,6 +23,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] float saturationLerpTime = 2;
     ColorGrading colorGradingLayer;
 
+
+
     GameObject currentItem;
 
 
@@ -30,7 +33,7 @@ public class ItemManager : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         PostProcessVolume volume = cam.GetComponent<PostProcessVolume>();
         volume.profile.TryGetSettings<ColorGrading>(out colorGradingLayer);
-
+        crosshair = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<Crosshair>();
         Debug.Log(colorGradingLayer);
     }
 
@@ -41,59 +44,72 @@ public class ItemManager : MonoBehaviour
         //dropping
         if (currentItem != null)
         {
-            if (Input.GetMouseButton(0))
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2))
             {
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 1))
+                if (hit.transform.tag == "Placeable")
                 {
-                    if (hit.transform.tag == "Placeable")
+                    crosshair.Resizing = true;
+
+                    if (Input.GetMouseButtonDown(0))
                     {
-
-
-                        if (Input.GetMouseButtonDown(0))
+                        if (colorGradingLayer.saturation.value + saturationIncreaseAmount <= maxSaturation)
                         {
-
-                            if (colorGradingLayer.saturation.value + saturationIncreaseAmount <= maxSaturation)
-                            {
-                                StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, colorGradingLayer.saturation.value + saturationIncreaseAmount, saturationLerpTime));
-                            }
-                            else
-                            {
-                                if (colorGradingLayer.saturation.value != maxSaturation)
-                                {
-                                    StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, maxSaturation, saturationLerpTime));
-                                }
-                            }
-
-                            ArmsAC.SetBool("isHolding", false);
-                            GameObject temp = new GameObject();
-                            temp.transform.position = (hit.point + (Vector3.up * (hit.transform.localScale.y / 2)));
-                            StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
-                            currentItem.transform.parent = null;
-                            currentItem = null;
+                            StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, colorGradingLayer.saturation.value + saturationIncreaseAmount, saturationLerpTime));
                         }
+                        else
+                        {
+                            if (colorGradingLayer.saturation.value != maxSaturation)
+                            {
+                                StartCoroutine(LerpSaturationForSeconds(colorGradingLayer.saturation, maxSaturation, saturationLerpTime));
+                            }
+                        }
+
+                        ArmsAC.SetBool("isHolding", false);
+                        GameObject temp = new GameObject();
+                        temp.transform.position = (hit.point + (Vector3.up * (hit.transform.localScale.y / 2)));
+                        StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
+                        currentItem.transform.parent = null;
+                        currentItem = null;
                     }
                 }
+                else
+                {
+                    crosshair.Resizing = false;
+                }
+            }
+            else
+            {
+                crosshair.Resizing = false;
             }
         }
+
 
         //pickingup
         else
         {
-            hits = Physics.SphereCastAll(cam.transform.position, 2, cam.transform.forward, 10);
 
-            foreach (var currenthit in hits)
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2))
             {
-                if (currenthit.transform.tag == "Pickupable")
+                if (hit.transform.tag == "Pickupable")
                 {
+                    crosshair.Resizing = true;
                     if (Input.GetMouseButtonDown(0))
                     {
-                        StartCoroutine(MoveObjectAToB(currenthit.transform.gameObject, itemHoldPos, travelTime));
-                        currentItem = currenthit.transform.gameObject;
+                        StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime));
+                        currentItem = hit.transform.gameObject;
                         Debug.Log(currentItem);
                         currentItem.transform.parent = itemHoldPos.transform;
                         ArmsAC.SetBool("isHolding", true);
                     }
                 }
+                else
+                {
+                    crosshair.Resizing = false;
+                }
+            }
+            else
+            {
+                crosshair.Resizing = false;
             }
 
         }
@@ -142,7 +158,7 @@ public class ItemManager : MonoBehaviour
         }
 
 
-     
+
     }
 
 }
