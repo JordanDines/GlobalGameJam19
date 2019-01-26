@@ -66,6 +66,7 @@ public class ItemManager : MonoBehaviour
                         }
 
                         ArmsAC.SetBool("isHolding", false);
+                        currentItem.GetComponent<SfxPickUpDropOff>().PlayDropOffSFX();
                         GameObject temp = new GameObject();
                         currentItem.transform.parent = null;
                         temp.transform.position = hit.point + Vector3.up * currentItem.transform.localScale.y / 2;
@@ -102,6 +103,7 @@ public class ItemManager : MonoBehaviour
                         currentItem.transform.parent = hit.transform.GetComponent<ItemInfo>().targetTrasform.transform;
                         StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime, false, true));
                         ArmsAC.SetBool("isHolding", true);
+                        hit.transform.GetComponent<SfxPickUpDropOff>().PlayPickUpSFX();
                     }
                 }
                 else
