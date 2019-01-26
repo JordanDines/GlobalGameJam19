@@ -28,10 +28,12 @@ public class PlayerController : MonoBehaviour
     private GameObject cameraPivot;
 
     [SerializeField]
+    private GameObject armsPivot;
+
+    [SerializeField]
     private AnimationCurve shuffleSpeedCurve;
 
-    [SerializeField] Animator ArmsAC;
-
+    [SerializeField] Animator armsAC;
 
     private CharacterController cc;
 
@@ -42,21 +44,25 @@ public class PlayerController : MonoBehaviour
     private Vector2 rotation;
 
     private Camera cam;
+    private GameObject arms;
 
-    private Animator animator;
+    private Animator camAnimator;
 
     private bool moving = false;
     private bool onBed = false;
 
     private float shuffleTime = 0;
 
-    enum PlayerState
+    public enum PlayerState
     {
         Default,
-        Interacting
+        Interacting,
+        Animating
     }
 
     private PlayerState state;
+
+    public PlayerState State { get { return state; } }
 
     private void Awake()
     {
@@ -64,7 +70,8 @@ public class PlayerController : MonoBehaviour
         targetRotation = Vector2.zero;
         rotation = Vector2.zero;
         cam = Camera.main;
-        animator = GetComponent<Animator>();
+        camAnimator = GetComponent<Animator>();
+        arms = armsAC.gameObject;
     }
 
     private void Start()
@@ -75,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (state != PlayerState.Interacting)
+        if (state != PlayerState.Animating)
         {
             Movement();
 
@@ -106,16 +113,7 @@ public class PlayerController : MonoBehaviour
             movement += transform.right;
         }
 
-        if (movement.magnitude > 0)
-        {
-            moving = true;
-            ArmsAC.SetBool("isWalking", true);
-        }   
-        else
-        {
-            moving = false;
-            ArmsAC.SetBool("isWalking", false);
-        }
+        moving = movement.magnitude > 0;
 
         if (onBed)
         {
@@ -140,6 +138,9 @@ public class PlayerController : MonoBehaviour
 
         // Move the camera with the player
         cam.transform.position = cameraPivot.transform.position;
+
+        arms.transform.position = armsPivot.transform.position;
+        arms.transform.rotation = armsPivot.transform.rotation;
     }
 
     private void Mouse()
@@ -158,8 +159,10 @@ public class PlayerController : MonoBehaviour
 
     private void Animations()
     {
-        animator.SetBool("Moving", moving);
-        animator.SetBool("OnBed", onBed);
+        camAnimator.SetBool("Moving", moving);
+        camAnimator.SetBool("OnBed", onBed);
+        armsAC.SetBool("isWalking", moving);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -177,4 +180,45 @@ public class PlayerController : MonoBehaviour
             onBed = false;
         }
     }
+
+    public void SetInteracting(float time)
+    {
+        StartCoroutine(StartInteracting(time));
+    }
+
+    public void SetAnimating(float time)
+    {
+        StartCoroutine(StartAnimating(time));
+    }
+
+    private IEnumerator StartInteracting(float time)
+    {
+        if (state != PlayerState.Default)
+        {
+            Debug.LogError("Changing player state too quick!", gameObject);
+            yield break;
+        }
+
+        state = PlayerState.Interacting;
+
+        yield return new WaitForSeconds(time);
+
+        state = PlayerState.Default;
+    }
+
+    private IEnumerator StartAnimating(float time)
+    {
+        if (state != PlayerState.Default)
+        {
+            Debug.LogError("Changing player state too quick!", gameObject);
+            yield break;
+        }
+
+        state = PlayerState.Animating;
+
+        yield return new WaitForSeconds(time);
+
+        state = PlayerState.Default;
+    }
+
 }

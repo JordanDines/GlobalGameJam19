@@ -25,9 +25,7 @@ public class ItemManager : MonoBehaviour
 
     int itemPlaceCount = 0;
 
-
     GameObject currentItem;
-
 
     void Start()
     {
@@ -37,7 +35,6 @@ public class ItemManager : MonoBehaviour
         crosshair = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<Crosshair>();
         Debug.Log(colorGradingLayer);
     }
-
 
     // Update is called once per frame
     void Update()
@@ -69,7 +66,7 @@ public class ItemManager : MonoBehaviour
                         currentItem.GetComponent<SfxPickUpDropOff>().PlayDropOffSFX();
                         GameObject temp = new GameObject();
                         currentItem.transform.parent = null;
-                        temp.transform.position = hit.point + Vector3.up * currentItem.transform.localScale.y / 2;
+                        temp.transform.position = hit.point;// + Vector3.up * currentItem.transform.localScale.y / 2;
                         StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
                         currentItem.transform.tag = "Untagged";
                         currentItem = null;
@@ -137,8 +134,6 @@ public class ItemManager : MonoBehaviour
         }
 
     }
-
-
 
     IEnumerator MoveObjectAToB(GameObject go1, GameObject finalPos, float amoutOfTime, bool destroyGO = false, bool useLocalPos = false)
     {

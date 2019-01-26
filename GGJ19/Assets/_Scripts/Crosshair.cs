@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class Crosshair : MonoBehaviour
 {
 
