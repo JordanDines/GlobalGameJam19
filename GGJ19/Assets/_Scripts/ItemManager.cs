@@ -100,7 +100,7 @@ public class ItemManager : MonoBehaviour
                     {
                         currentItem = hit.transform.gameObject;
                         currentItem.transform.parent = hit.transform.GetComponent<ItemInfo>().targetTrasform.transform;
-                        StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime));
+                        StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime, false, true));
                         ArmsAC.SetBool("isHolding", true);
                     }
                 }
@@ -138,7 +138,7 @@ public class ItemManager : MonoBehaviour
 
 
 
-    IEnumerator MoveObjectAToB(GameObject go1, GameObject finalPos, float amoutOfTime, bool destroyGO = false)
+    IEnumerator MoveObjectAToB(GameObject go1, GameObject finalPos, float amoutOfTime, bool destroyGO = false, bool useLocalPos = false)
     {
         float currentTime = 0;
         float timeAsPercent = 0;
@@ -153,9 +153,16 @@ public class ItemManager : MonoBehaviour
             currentTime += Time.deltaTime;
             timeAsPercent = currentTime / amoutOfTime;
 
-            go1.transform.localPosition = Vector3.Lerp(startValue, finalPosition, timeAsPercent);
-            go1.transform.localRotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
-            go1.transform.rotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
+            if (useLocalPos)
+            {
+                go1.transform.localPosition = Vector3.Lerp(startValue, finalPosition, timeAsPercent);
+                go1.transform.localRotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
+            }
+            else
+            {
+                go1.transform.rotation = Quaternion.Slerp(startRot, finalRot, timeAsPercent);
+                go1.transform.position = Vector3.Lerp(startValue, finalPos.transform.position, timeAsPercent);
+            }
             yield return null;
         }
 
