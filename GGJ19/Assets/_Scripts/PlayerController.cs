@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
 
     public void ItemPlaced()
     {
-
+        Destroy(boxes.transform.GetChild(0).gameObject);
     }
 
 }
