@@ -107,18 +107,23 @@ public class ItemManager : MonoBehaviour
 
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2, LayerMask.GetMask("Pickupables")))
                 {
-                    if(hit.transform.gameObject == laptopScreen)
+                    if (hit.transform.gameObject == laptopScreen)
                     {
-                        if(transform.GetChild(0).gameObject.activeInHierarchy)
+                        crosshair.Resizing = true;
+
+                        if (Input.GetMouseButtonDown(0))
                         {
-                            transform.GetChild(0).gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            transform.GetChild(0).gameObject.SetActive(true);
+                            if (hit.transform.GetChild(0).gameObject.activeInHierarchy)
+                            {
+                                hit.transform.GetChild(0).gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                hit.transform.GetChild(0).gameObject.SetActive(true);
+                            }
                         }
                     }
-                    if (hit.transform.tag == "Pickupable")
+                    else if (hit.transform.tag == "Pickupable")
                     {
                         crosshair.Resizing = true;
                         if (Input.GetMouseButtonDown(0))
