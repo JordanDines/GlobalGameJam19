@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     private GameObject armsPivot;
 
     [SerializeField]
+    private GameObject armsPivot2;
+
+    [SerializeField]
     private AnimationCurve shuffleSpeedCurve;
 
     [SerializeField]
@@ -132,6 +135,11 @@ public class PlayerController : MonoBehaviour
                 else
                     PauseGame();
             }
+        }
+        else
+        {
+            arms.transform.position = armsPivot2.transform.position;
+            arms.transform.rotation = armsPivot2.transform.rotation;
         }
     }
 
