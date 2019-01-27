@@ -61,7 +61,7 @@ public class ItemManager : MonoBehaviour
             {
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2))
                 {
-                    if (hit.transform.tag == "Placeable")
+                    if (hit.transform.tag == "Placeable" && hit.transform.GetComponent<PlaceableArea>().hasItem == false)
                     {
                         crosshair.Resizing = true;
 
@@ -90,6 +90,7 @@ public class ItemManager : MonoBehaviour
                             currentItem = null;
                             itemPlaceCount++;
                             player.ItemPlaced();
+                            hit.transform.GetComponent<PlaceableArea>().hasItem = true;
                         }
                     }
                     else

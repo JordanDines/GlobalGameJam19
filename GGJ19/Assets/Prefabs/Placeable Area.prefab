@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33475101906856638}
   - component: {fileID: 23819065802032746}
   - component: {fileID: 65529458732042288}
+  - component: {fileID: 114961062939530716}
   m_Layer: 0
   m_Name: Placeable Area
   m_TagString: Placeable
@@ -36,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1109446222539596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.34, y: 0.014, z: 2.94}
-  m_LocalScale: {x: 3.0407, y: 0.01, z: 3.673}
+  m_LocalPosition: {x: -3.8, y: 0.775, z: -0.657}
+  m_LocalScale: {x: 0.43174487, y: 0.0014198865, z: 0.5215243}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,3 +97,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114961062939530716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1109446222539596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f04b07e9ad874d488f35a896aa4b6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasItem: 1
