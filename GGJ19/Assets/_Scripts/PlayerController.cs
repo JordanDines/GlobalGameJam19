@@ -124,10 +124,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-        //}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+        }
 
         if (state != PlayerState.Animating)
         {
@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour
 
         FadeIn(fadeTime);
 
-        PlayCredits(fadeTime);
+        StartCoroutine(PlayCredits(fadeTime));
     }
 
     private void OnTriggerEnter(Collider other)
