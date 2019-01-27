@@ -81,11 +81,12 @@ public class ItemManager : MonoBehaviour
                             currentItem.GetComponent<SfxPickUpDropOff>().PlayDropOffSFX();
                             GameObject temp = new GameObject();
                             currentItem.transform.parent = null;
-                            temp.transform.position = hit.point + Vector3.up * currentItem.transform.localScale.y / 2;
+                            temp.transform.position = hit.point + Vector3.up * ((currentItem.transform.localScale.y / 2) + currentItem.transform.localScale.y / 4);
                             StartCoroutine(MoveObjectAToB(currentItem, temp, travelTime, true));
                             currentItem.transform.tag = "Untagged";
                             currentItem = null;
                             itemPlaceCount++;
+                            player.ItemPlaced();
                         }
                     }
                     else
