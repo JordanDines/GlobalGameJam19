@@ -68,8 +68,6 @@ public class PlayerController : MonoBehaviour
     private bool moving = false;
     private bool onBed = false;
 
-    private bool gameFinished = false;
-
     private float shuffleTime = 0;
 
     private ItemManager itemManager;
@@ -191,9 +189,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void EndGame()
-    {
-        gameFinished = true;
-
+    { 
         Destroy(doorAnimator.gameObject);
         Destroy(arms.gameObject);
         cam.transform.position = endGameCamPos.position;
@@ -210,7 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             onBed = true;
         }
-        if (other.tag == "Door" && gameFinished)
+        if (other.tag == "Door" && itemManager.ItemPlaceCount == 5)
         {
             state = PlayerState.Animating;
             FadeOut(fadeTime);
