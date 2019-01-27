@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -52,6 +53,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform endGameCamPos;
 
+    [SerializeField]
+    private GameObject creditsPanel;
+
+    [SerializeField]
+    private GameObject pausePanel;
+
+    [SerializeField]
+    private GameObject crosshair;
+
     private CharacterController cc;
 
     private float targetSpeed;
@@ -71,6 +81,8 @@ public class PlayerController : MonoBehaviour
     private float shuffleTime = 0;
 
     private ItemManager itemManager;
+
+    private bool paused = false;
 
     public enum PlayerState
     {
@@ -112,6 +124,14 @@ public class PlayerController : MonoBehaviour
             Mouse();
 
             Animations();
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                if (paused)
+                    ResumeGame();
+                else
+                    PauseGame();
+            }
         }
     }
 
@@ -189,7 +209,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void EndGame()
-    { 
+    {
         Destroy(doorAnimator.gameObject);
         Destroy(arms.gameObject);
         cam.transform.position = endGameCamPos.position;
@@ -302,7 +322,7 @@ public class PlayerController : MonoBehaviour
 
         fadePanel.color = new Color(fadePanel.color.r, fadePanel.color.g, fadePanel.color.b, to);
 
-        if (to == 1.0f )
+        if (to == 1.0f)
         {
             EndGame();
         }
@@ -312,8 +332,54 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        // TODO play credits
+        creditsPanel.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        crosshair.SetActive(false);
     }
 
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+      Application.Quit();
+#endif
+    }
+
+    public void PauseGame()
+    {
+        pausePanel.SetActive(true);
+        state = PlayerState.Animating;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        crosshair.SetActive(false);
+        Time.timeScale = 0;
+    }
+
+    public void ResumeGame()
+    {
+        pausePanel.SetActive(false);
+        state = PlayerState.Default;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        crosshair.SetActive(true);
+        Time.timeScale = 1;
+    }
+
+    public void RestartGame()
+    {
+        StartCoroutine(RestartAfterFade());
+    }
+
+    private IEnumerator RestartAfterFade()
+    {
+        FadeOut(fadeTime);
+
+        yield return new WaitForSeconds(fadeTime);
+
+        SceneManager.LoadScene(0);
+    }
 
 }
