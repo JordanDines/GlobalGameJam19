@@ -11,6 +11,36 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1792341212096650}
   m_IsPrefabAsset: 1
+--- !u!1 &1053654779148626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4305424884804048}
+  m_Layer: 2
+  m_Name: Arms Pivot Animated
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1540612594641066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4092690996295442}
+  m_Layer: 2
+  m_Name: Arms Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1792341212096650
 GameObject:
   m_ObjectHideFlags: 0
@@ -23,6 +53,8 @@ GameObject:
   - component: {fileID: 81762419508694168}
   - component: {fileID: 114917407454254476}
   - component: {fileID: 114609512545079626}
+  - component: {fileID: 95251015610356568}
+  - component: {fileID: 114043294308046372}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -30,16 +62,44 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4092690996295442
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540612594641066}
+  m_LocalRotation: {x: -0.13044633, y: 0.034687385, z: 0.0045666825, w: 0.99083793}
+  m_LocalPosition: {x: 0, y: -0.10648896, z: 0.05519863}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 4507905557518868}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -15, y: 4.01, z: 0}
+--- !u!4 &4305424884804048
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1053654779148626}
+  m_LocalRotation: {x: -0.13044631, y: 0.03468741, z: 0.004566684, w: 0.9908379}
+  m_LocalPosition: {x: 0.012, y: -0.121, z: 0.224}
+  m_LocalScale: {x: 10, y: 10, z: 10.000001}
+  m_Children: []
+  m_Father: {fileID: 4507905557518868}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -15, y: 4.01, z: 0}
 --- !u!4 &4507905557518868
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1792341212096650}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.228, y: 1.92, z: 1.43}
+  m_LocalRotation: {x: 0.22913826, y: 0.24571823, z: -0.059899643, w: 0.9399629}
+  m_LocalPosition: {x: -3.314, y: 1.627945, z: -2.174}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4092690996295442}
+  - {fileID: 4305424884804048}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -90,6 +150,63 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1792341212096650}
   m_Enabled: 1
+--- !u!95 &95251015610356568
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792341212096650}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: faeceaba9a701c24e96d50e4476819cb, type: 3}
+  m_Controller: {fileID: 9100000, guid: 7a2ef649abe7c7c4a979b0ef7b96dc05, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114043294308046372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792341212096650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd431eb115089443a682508c4072799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabClips:
+  - {fileID: 8300000, guid: d55eb9f85e0c1f148bf6529eb23b1370, type: 3}
+  - {fileID: 8300000, guid: 45136f6221bcb0f418c383cc60a30388, type: 3}
+  - {fileID: 8300000, guid: 94d6e479add9d0040b9f4e62dc8ea106, type: 3}
+  - {fileID: 8300000, guid: 64e7ed9cd43398d4dbfbc4958f064a4d, type: 3}
+  - {fileID: 8300000, guid: 4e643dfdfb61fdb4b8ada922a799c4c1, type: 3}
+  - {fileID: 8300000, guid: 4b8f1ee9d9595d8448ee50dc77082b5d, type: 3}
+  - {fileID: 8300000, guid: 3d37d4ddcaebdd242b91804d6df69957, type: 3}
+  - {fileID: 8300000, guid: 98d2bb3860e59174d8953e98d286e306, type: 3}
+  - {fileID: 8300000, guid: d55eb9f85e0c1f148bf6529eb23b1370, type: 3}
+  - {fileID: 8300000, guid: 45136f6221bcb0f418c383cc60a30388, type: 3}
+  - {fileID: 8300000, guid: 29f43fc4c9587054cacaf764a3a1fc1f, type: 3}
+  - {fileID: 8300000, guid: 29f43fc4c9587054cacaf764a3a1fc1f, type: 3}
+  - {fileID: 8300000, guid: 0487747af18bb5d4bb63289dc1e0a720, type: 3}
+  - {fileID: 8300000, guid: 16c1d9831a0c51f4a88d7cd9317f1c35, type: 3}
+  - {fileID: 8300000, guid: 2e9d71faf5498e042b973b2eb4fefc3a, type: 3}
+  - {fileID: 8300000, guid: 0d2032a241152c045a81de1af6c4248e, type: 3}
+  - {fileID: 8300000, guid: ad5b6f2deffcd334ebd60de62131e13c, type: 3}
+  - {fileID: 8300000, guid: 582288f88f644d041b0c5eaea9fe34f2, type: 3}
+  - {fileID: 8300000, guid: b70a0d03af47ab740a2a37eef52ae8bc, type: 3}
+  - {fileID: 8300000, guid: f001cf7b5f9496d41b1dc2d360e6781a, type: 3}
+  - {fileID: 8300000, guid: 49a0d6da6d4616f4aa2980781c68e8f2, type: 3}
+  - {fileID: 8300000, guid: 8fc21b2b85a053341a6e04e548916ef7, type: 3}
+  - {fileID: 8300000, guid: 3fe75c73f3035ec4883838bca7c3733f, type: 3}
+  - {fileID: 8300000, guid: 153ff15eaead4c849ab781e87c941c75, type: 3}
+  - {fileID: 8300000, guid: 9de9baec6ff193849b5deae716706e99, type: 3}
+  - {fileID: 8300000, guid: c683cb29131fed74ea7a64f28135a3b5, type: 3}
+  - {fileID: 8300000, guid: 5cbc22068ce7f754392886b9da212661, type: 3}
 --- !u!114 &114609512545079626
 MonoBehaviour:
   m_ObjectHideFlags: 1
