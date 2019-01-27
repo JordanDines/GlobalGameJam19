@@ -370,15 +370,6 @@ public class PlayerController : MonoBehaviour
 
     public void RestartGame()
     {
-        StartCoroutine(RestartAfterFade());
-    }
-
-    private IEnumerator RestartAfterFade()
-    {
-        FadeOut(fadeTime);
-
-        yield return new WaitForSeconds(fadeTime);
-
         SceneManager.LoadScene(0);
     }
 
