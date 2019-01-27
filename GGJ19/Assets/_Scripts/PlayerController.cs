@@ -33,7 +33,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private AnimationCurve shuffleSpeedCurve;
 
-    [SerializeField] Animator armsAC;
+    [SerializeField]
+    private Animator armsAC;
+
+    [SerializeField]
+    private GameObject boxes;
 
     private CharacterController cc;
 
@@ -52,6 +56,8 @@ public class PlayerController : MonoBehaviour
     private bool onBed = false;
 
     private float shuffleTime = 0;
+
+    private ItemManager itemManager;
 
     public enum PlayerState
     {
@@ -72,6 +78,7 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         camAnimator = GetComponent<Animator>();
         arms = armsAC.gameObject;
+        itemManager = GetComponent<ItemManager>();
     }
 
     private void Start()
@@ -219,6 +226,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         state = PlayerState.Default;
+    }
+
+    public void ItemPlaced()
+    {
+
     }
 
 }
