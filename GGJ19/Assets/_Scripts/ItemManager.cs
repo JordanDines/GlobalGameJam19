@@ -21,6 +21,9 @@ public class ItemManager : MonoBehaviour
     [SerializeField] int maxSaturation = 100;
     [SerializeField] int saturationIncreaseAmount = 25;
     [SerializeField] float saturationLerpTime = 2;
+
+    [SerializeField] GameObject laptopScreen;
+
     ColorGrading colorGradingLayer;
 
     private PlayerController player;
@@ -104,6 +107,17 @@ public class ItemManager : MonoBehaviour
 
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 2, LayerMask.GetMask("Pickupables")))
                 {
+                    if(hit.transform.gameObject == laptopScreen)
+                    {
+                        if(transform.GetChild(0).gameObject.activeInHierarchy)
+                        {
+                            transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            transform.GetChild(0).gameObject.SetActive(true);
+                        }
+                    }
                     if (hit.transform.tag == "Pickupable")
                     {
                         crosshair.Resizing = true;
@@ -113,7 +127,7 @@ public class ItemManager : MonoBehaviour
                             currentItem.transform.parent = hit.transform.GetComponent<ItemInfo>().targetTrasform.transform;
                             StartCoroutine(MoveObjectAToB(hit.transform.gameObject, itemHoldPos, travelTime, false, true));
                             ArmsAC.SetBool("isHolding", true);
-                            player.SetInteracting(2.5f);
+                            player.SetInteracting(1.5f);
                             hit.transform.GetComponent<SfxPickUpDropOff>().PlayPickUpSFX();
                         }
                     }
