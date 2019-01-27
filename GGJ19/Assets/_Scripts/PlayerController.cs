@@ -116,10 +116,19 @@ public class PlayerController : MonoBehaviour
         state = PlayerState.Default;
         FadeIn(fadeTime);
         boxes.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
+        SetAnimating(6.0f);
+        Destroy(cam.GetComponent<Animator>(), 6.0f);
+        Time.timeScale = 1;
+
     }
 
     private void Update()
     {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+        //}
+
         if (state != PlayerState.Animating)
         {
             Movement();
