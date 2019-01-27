@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private float cameraLerpSpeed = 10.0f;
 
     [SerializeField]
+    private float fadeTime = 1.0f;
+
+    [SerializeField]
     private GameObject cameraPivot;
 
     [SerializeField]
@@ -34,10 +38,19 @@ public class PlayerController : MonoBehaviour
     private AnimationCurve shuffleSpeedCurve;
 
     [SerializeField]
-    private Animator armsAC;
+    private Animator armsAnimator;
 
     [SerializeField]
     private GameObject boxes;
+
+    [SerializeField]
+    private Animator doorAnimator;
+
+    [SerializeField]
+    private Image fadePanel;
+
+    [SerializeField]
+    private Transform endGameCamPos;
 
     private CharacterController cc;
 
@@ -54,6 +67,8 @@ public class PlayerController : MonoBehaviour
 
     private bool moving = false;
     private bool onBed = false;
+
+    private bool gameFinished = false;
 
     private float shuffleTime = 0;
 
@@ -77,7 +92,7 @@ public class PlayerController : MonoBehaviour
         rotation = Vector2.zero;
         cam = Camera.main;
         camAnimator = GetComponent<Animator>();
-        arms = armsAC.gameObject;
+        arms = armsAnimator.gameObject;
         itemManager = GetComponent<ItemManager>();
     }
 
@@ -85,10 +100,17 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         state = PlayerState.Default;
+        FadeIn(fadeTime);
+        boxes.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
     }
 
     private void Update()
     {
+        if (gameFinished)
+        {
+            return;
+        }
+
         if (state != PlayerState.Animating)
         {
             Movement();
@@ -168,8 +190,20 @@ public class PlayerController : MonoBehaviour
     {
         camAnimator.SetBool("Moving", moving);
         camAnimator.SetBool("OnBed", onBed);
-        armsAC.SetBool("isWalking", moving);
+        armsAnimator.SetBool("isWalking", moving);
 
+    }
+
+    private void EndGame()
+    {
+        Destroy(doorAnimator.gameObject);
+        Destroy(arms.gameObject);
+        cam.transform.position = endGameCamPos.position;
+        cam.transform.rotation = endGameCamPos.rotation;
+
+        FadeIn(fadeTime);
+
+        PlayCredits(fadeTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -177,6 +211,12 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Bed")
         {
             onBed = true;
+        }
+        if (other.tag == "Door")
+        {
+            gameFinished = true;
+            state = PlayerState.Animating;
+            FadeOut(fadeTime);
         }
     }
 
@@ -231,6 +271,56 @@ public class PlayerController : MonoBehaviour
     public void ItemPlaced()
     {
         Destroy(boxes.transform.GetChild(0).gameObject);
+
+        if (itemManager.ItemPlaceCount == 5)
+        {
+            doorAnimator.SetTrigger("OpenDoor");
+        }
+        else
+        {
+            boxes.transform.GetChild(1).GetComponent<Animator>().SetTrigger("Open");
+        }
     }
+
+    public void FadeOut(float time)
+    {
+        StartCoroutine(FadeImage(0.0f, 1.0f, time));
+    }
+
+    public void FadeIn(float time)
+    {
+        StartCoroutine(FadeImage(1.0f, 0.0f, time));
+    }
+
+    // Fades the fadePlane image from a colour to another over x seconds.
+    private IEnumerator FadeImage(float from, float to, float time)
+    {
+        float currentLerpTime = 0;
+        float t = 0;
+
+        while (t < 1)
+        {
+            currentLerpTime += Time.deltaTime;
+            t = currentLerpTime / time;
+            fadePanel.color = new Color(fadePanel.color.r, fadePanel.color.g, fadePanel.color.b, Mathf.Lerp(from, to, t));
+
+            yield return null;
+        }
+
+        fadePanel.color = new Color(fadePanel.color.r, fadePanel.color.g, fadePanel.color.b, to);
+
+        if (to == 1.0f )
+        {
+            EndGame();
+        }
+    }
+
+    private IEnumerator PlayCredits(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        // TODO play credits
+    }
+
 
 }
