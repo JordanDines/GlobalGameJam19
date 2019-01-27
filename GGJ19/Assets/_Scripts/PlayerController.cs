@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         state = PlayerState.Default;
         FadeIn(fadeTime);
         boxes.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
@@ -106,11 +107,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (gameFinished)
-        {
-            return;
-        }
-
         if (state != PlayerState.Animating)
         {
             Movement();
@@ -196,6 +192,8 @@ public class PlayerController : MonoBehaviour
 
     private void EndGame()
     {
+        gameFinished = true;
+
         Destroy(doorAnimator.gameObject);
         Destroy(arms.gameObject);
         cam.transform.position = endGameCamPos.position;
@@ -212,9 +210,8 @@ public class PlayerController : MonoBehaviour
         {
             onBed = true;
         }
-        if (other.tag == "Door")
+        if (other.tag == "Door" && gameFinished)
         {
-            gameFinished = true;
             state = PlayerState.Animating;
             FadeOut(fadeTime);
         }
