@@ -124,11 +124,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-        }
-
+        
         if (state != PlayerState.Animating)
         {
             Movement();
